@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: Truck Manager API
+  version: "1.0.0"
+  description: API documentation for the Truck Manager system
+
+servers:
+  - url: http://localhost:${port}
+
+paths:
+  /drivers:
+    get:
+      summary: Retrieve all drivers
+      tags:
+        - Drivers
+      responses:
+        '200':
+          description: List of all drivers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Driver'
+
+    post:
+      summary: Create a new driver
+      tags:
+        - Drivers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDriver'
+      responses:
+        '201':
+          description: Driver successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+        '400':
+          description: Missing or invalid input
+
+    get:
+      summary: Retrieve driver by ID
+      tags:
+        - Drivers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the driver
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Driver found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+        '404':
+          description: Driver not found
+  paths:
+  /drivers/{id}:
+    put:
+      summary: Update driver by ID
+      tags:
+        - Drivers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Driver ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: New Driver Name
+      responses:
+        '200':
+          description: Driver updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+        '404':
+          description: Driver not found
+
+
+components:
+  schemas:
+    Driver:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: driver1
+
+    NewDriver:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+      example:
+        name: "driver2"
