@@ -18,7 +18,12 @@ mongoose.connect(process.env.DATABASE_URL)
   .catch((err) => console.error('MongoDB connection error:', err));
 
 
-const adminRoutes = require('./adminRoutes/drivers');
+//const adminRoutes = require('./adminRoutes/drivers');
+
+const routes = require('./src/routes/route');
+app.use(express.json());
+app.use('/', routes);
+
 const swaggerDocs = YAML.load('./swagger.yaml');
 
 swaggerDocs.servers = [
@@ -29,14 +34,13 @@ swaggerDocs.servers = [
  
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use(express.json());
 
 app.get('/', (req, res) => {
   console.log("Arxiki");
   res.send('Arxiki');
 });
 
-app.use('/drivers', adminRoutes);
+//app.use('/drivers', adminRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

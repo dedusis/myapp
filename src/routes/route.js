@@ -1,10 +1,8 @@
-const driverRouter = require('../drivers/route');
-
-
+const express = require('express');
+const driverRouter = require('../admin/route');
 const router = express.Router();
 
-
-router.use('/driver', driverRouter);
+router.use('/alldrivers', driverRouter);
 
 
 module.exports = router;
