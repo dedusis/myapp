@@ -5,7 +5,7 @@ info:
   description: API documentation for the Truck Manager system
 
 servers:
-  - url: http://localhost:${port}
+  - url: http://localhost:5000
 
 paths:
   /alldrivers:
@@ -21,14 +21,65 @@ paths:
                 items:
                   $ref: '#/components/schemas/Driver'
 
+  /newdriver:
+    post:
+      summary: Create a new driver
+      tags:
+        - Drivers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Kostas"
+                lastname:
+                  type: string
+                  example: Papados
+                licenseNumber:
+                  type: string
+                  example: "665a282c1cd34ddf8d984b6b"
+      responses:
+        '201':
+          description: Driver created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Driver created successfully
+                  Driver:
+                    $ref: '#/components/schemas/Driver'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: server error
+
 components:
   schemas:
     Driver:
       type: object
       properties:
-        id:
+        _id:
           type: string
-          example: "123"
+          example: "665a282c1cd34ddf8d984b6c"
         name:
           type: string
-          example: "Driver 1"
+          example: Giannis
+        lastname:
+          type: string
+          example: Papas
+        licenseNumber:
+          type: string
+          example: "1347h743h71hf44j9f818fj3"

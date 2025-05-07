@@ -1,10 +1,16 @@
 // milame me basi edw
+const Driver = require('../models/Driver');
 
-const getAllUsers = () => {
-    const drivers = ["Driver 1", "Driver 2", "Driver 3"];
-    console.log("drivers list");
-    console.log("Drivers: ", drivers);
+const getAllUsers = async () => {
+    const drivers = await Driver.find();
     return drivers;
+};
+
+const createDriver = async (driverData) => {
+    const newDriver = new Driver(driverData);
+    await newDriver.save();
+    return newDriver;
 }
 
-module.exports = { getAllUsers };
+
+module.exports = { getAllUsers, createDriver };
