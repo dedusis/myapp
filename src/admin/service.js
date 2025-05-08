@@ -21,5 +21,28 @@ const getDriverById = async (id) => {
     return DriverById;
 }
 
+const updateDriverById = async (id, data) => {
+    const updateDriver = await Driver.findByIdAndUpdate(id, data, { new: true });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new Error("Invalid ID")
+    }
+    return updateDriver;
+};
 
-module.exports = { getAllUsers, createDriver, getDriverById };
+const deleteDriverById = async (id) => {
+    const delDriverById = await Driver.findByIdAndDelete(id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new Error("Invalid ID")
+    }
+    return delDriverById;
+};
+
+
+
+
+module.exports = { 
+    getAllUsers,
+    createDriver,
+    getDriverById, 
+    updateDriverById,
+    deleteDriverById };

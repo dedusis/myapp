@@ -11,6 +11,8 @@ paths:
   /admin/alldrivers:
     get:
       summary: Get all drivers
+      tags:
+        - Drivers
       responses:
         '200':
           description: A list of drivers
@@ -31,17 +33,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: "Kostas"
-                lastname:
-                  type: string
-                  example: Papados
-                licenseNumber:
-                  type: string
-                  example: "665a282c1cd34ddf8d984b6b"
+              $ref: '#/components/schemas/NewDriver'
       responses:
         '201':
           description: Driver created successfully
@@ -52,8 +44,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Driver created successfully
-                  Driver:
+                  driver:
                     $ref: '#/components/schemas/Driver'
         '500':
           description: Server error
@@ -64,12 +55,12 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: server error
 
   /admin/driver/{id}:
     get:
       summary: Get a driver by ID
-      description: Returns a single driver by their MongoDB ID.
+      tags:
+        - Drivers
       parameters:
         - in: path
           name: id
@@ -84,6 +75,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Driver'
+        '404':
+          description: Driver not found
+        '500':
+          description: Server error
+
+    put:
+      summary: Update a driver by ID
+      tags:
+        - Drivers
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDriver'
+      responses:
+        '200':
+          description: Driver updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+        '404':
+          description: Driver not found
+        '500':
+          description: Server error
+
+    delete:
+      summary: Delete a driver by ID
+      tags:
+        - Drivers
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Driver deleted
         '404':
           description: Driver not found
         '500':
@@ -106,3 +143,16 @@ components:
         licenseNumber:
           type: string
           example: "1347h743h71hf44j9f818fj3"
+
+    NewDriver:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Kostas"
+        lastname:
+          type: string
+          example: "Papados"
+        licenseNumber:
+          type: string
+          example: "AB123456"
