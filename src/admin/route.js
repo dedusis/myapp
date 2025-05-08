@@ -2,13 +2,16 @@ const express = require('express')
 const router = express.Router();
 const { getAllUsersController  } = require('./controller');
 const { createDriverController } = require('./controller');
+const { getDriverByIdController } = require('./controller');
 
 
-//ger all drivers
-router.get('/alldrivers', getAllUsersController);
+//get all drivers
+router.get('/admin/alldrivers', getAllUsersController);
 
 //create driver
-router.post('/newdriver', createDriverController);
+router.post('/admin/newdriver', createDriverController);
 
+//get driver by id
+router.get('/admin/driver/:id', getDriverByIdController);
 
 module.exports = router; 

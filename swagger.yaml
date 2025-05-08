@@ -8,7 +8,7 @@ servers:
   - url: http://localhost:5000
 
 paths:
-  /alldrivers:
+  /admin/alldrivers:
     get:
       summary: Get all drivers
       responses:
@@ -21,7 +21,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Driver'
 
-  /newdriver:
+  /admin/newdriver:
     post:
       summary: Create a new driver
       tags:
@@ -65,6 +65,29 @@ paths:
                   error:
                     type: string
                     example: server error
+
+  /admin/driver/{id}:
+    get:
+      summary: Get a driver by ID
+      description: Returns a single driver by their MongoDB ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the driver
+      responses:
+        '200':
+          description: Driver found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+        '404':
+          description: Driver not found
+        '500':
+          description: Server error
 
 components:
   schemas:

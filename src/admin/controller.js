@@ -1,5 +1,6 @@
 const { getAllUsers } = require('./service');
-const {createDriver} = require('./service');
+const { createDriver } = require('./service');
+const { getDriverById } = require('./service');
 
 const getAllUsersController = async (req, res) => {
   try {
@@ -23,5 +24,22 @@ const createDriverController = async (req, res) => {
   }
 };
 
+const getDriverByIdController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const DriverById = await getDriverById(id);
 
-module.exports = { getAllUsersController, createDriverController };
+    console.log("The Driver whith id:", id, "is :", DriverById);
+
+    if (!DriverById) {
+      return res.status(404).json({ message: 'Driver not found' });
+    }
+
+    res.status(200).json(DriverById);
+  } catch (err) {
+    console.error('Error fetching driver by ID:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+module.exports = { getAllUsersController, createDriverController, getDriverByIdController };
