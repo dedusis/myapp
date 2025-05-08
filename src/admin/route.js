@@ -6,12 +6,12 @@ const { getDriverByIdController } = require('./controller');
 
 
 //get all drivers
-router.get('/alldrivers', getAllUsersController);
+router.get('/admin/alldrivers', getAllUsersController);
 
 //create driver
-router.post('/newdriver', createDriverController);
+router.post('/admin/newdriver', createDriverController);
 
 //get driver by id
-router.get('/driver/:id', getDriverByIdController);
+router.get('/admin/driver/:id', getDriverByIdController);
 
 module.exports = router; 

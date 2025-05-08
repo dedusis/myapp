@@ -2,7 +2,7 @@ const express = require('express');
 const adminRouter = require('../admin/route');
 const router = express.Router();
 
-router.use('/admin', adminRouter);
+router.use('/', adminRouter);
 
 
 module.exports = router;
