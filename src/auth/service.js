@@ -1,14 +1,38 @@
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';         // optional
+import Driver from '../driver/model.js';
 
+export const loginService = async (username, password) => {
+  const driver = await Driver.findOne({ username, password });
+  if (!driver) {
+    throw new Error('Invalid credentials');
+  }
 
-const loginService = async (username, password) => {
-    // TODO: check if admin exists wih username password. 
-    
-    const driver = await Driver.find({username: username, password: password});
-    if (!driver) 
-        throw new Error("No driver found");
-    return driver;
+// For the future, check encrypted password, if matches.
+
+//   const passwordMatches = await bcrypt.compare(password, driver.password);
+//   if (!passwordMatches) {
+//     throw new Error('Invalid credentials');
+//   }
+
+  const payload = {
+    id: driver._id,
+    username: driver.username,
+    role: 'driver'
+  };
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN || '1h'
+  });
+
+  return {
+    token,
+    driver: {
+      _id: driver._id,
+      name: driver.name,
+      lastname: driver.lastname,
+      licenseNumber: driver.licenseNumber,
+      username: driver.username
+    }
+  };
 };
-
-
-
-export default {loginService};
