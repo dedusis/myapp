@@ -4,6 +4,7 @@ import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 import dotenv from 'dotenv';
 import appRouter from './src/routes/router.js';
+import cors from "cors";
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
@@ -20,6 +21,7 @@ mongoose.connect(process.env.DATABASE_URL)
 
 
 
+app.use(cors());
 app.use(express.json());
 app.use('/', appRouter);
 

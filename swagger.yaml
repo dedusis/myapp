@@ -5,9 +5,33 @@ info:
   description: API documentation for the Truck Manager system
 
 servers:
-  - url: http://localhost:5000
+  - url: http://localhost:5005
+    description: Local development server
 
 paths:
+  /auth/login:
+    post:
+      summary: User login
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+        '500':
+          description: Server error
+
   /driver/all:
     get:
       summary: Get all drivers
@@ -128,12 +152,37 @@ paths:
 
 components:
   schemas:
+    Credentials:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: user@example.com
+        password:
+          type: string
+          example: hunter2
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT access token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+        expiresIn:
+          type: integer
+          description: Expiration time in seconds
+          example: 3600
+
     Driver:
       type: object
       properties:
         _id:
           type: string
-          example: "665a282c1cd34ddf8d984b6c"
+          example: 665a282c1cd34ddf8d984b6c
         name:
           type: string
           example: Giannis
@@ -142,21 +191,23 @@ components:
           example: Papas
         licenseNumber:
           type: string
-          example: "1347h743h71hf44j9f818fj3"
+          example: 1347h743h71hf44j9f818fj3
 
     NewDriver:
       type: object
       properties:
         name:
           type: string
-          example: "Kostas"
+          example: Kostas
         lastname:
           type: string
-          example: "Papados"
+          example: Papados
         licenseNumber:
           type: string
-          example: "AB123456"
+          example: AB123456
         username:
           type: string
+          example: kostas.papados
         password:
           type: string
+          example: supersafePwd
