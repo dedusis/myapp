@@ -1,28 +1,27 @@
+import mongoose from 'mongoose';
+import express from  'express';
+import YAML from 'yamljs';
+import swaggerUi from 'swagger-ui-express';
+import dotenv from 'dotenv';
+import {router} from './src/routes/router';
+
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+  dotenv.config();
 }
 
-const express = require('express');
 const app = express();
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const path = require('path');
 
 const port = process.env.PORT || 3000;
 
 // MongoDB connection
-const mongoose = require('mongoose');
-
 mongoose.connect(process.env.DATABASE_URL)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
 
-//const adminRoutes = require('./adminRoutes/drivers');
 
-const routes = require('./src/routes/route');
 app.use(express.json());
-app.use('/', routes);
+app.use('/', router);
 
 const swaggerDocs = YAML.load('./swagger.yaml');
 
