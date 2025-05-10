@@ -1,9 +1,9 @@
-import { getAllUsers, createDriver, getDriverById, updateDriverById, deleteDriverById } from './service';
+import driverService from './service.js';
 
 
 const getAllUsersController = async (req, res) => {
   try {
-    const drivers = await getAllUsers();
+    const drivers = await driverService.getAllUsers();
     console.log("Drivers list:", drivers);
     res.status(200).json(drivers);
   } catch (err) {
@@ -14,7 +14,7 @@ const getAllUsersController = async (req, res) => {
 
 const createDriverController = async (req, res) => {
   try {
-    const newDriver = await createDriver(req.body);
+    const newDriver = await driverService.createDriver(req.body);
     console.log("creating driver:", newDriver);
     res.status(201).json({ Message: 'Driver created successfully', driver: newDriver });
   } catch (err) {
@@ -26,7 +26,7 @@ const createDriverController = async (req, res) => {
 const getDriverByIdController = async (req, res) => {
   try {
     const id = req.params.id;
-    const DriverById = await getDriverById(id);
+    const DriverById = await driverService.getDriverById(id);
 
     console.log("The Driver with id:", id, "is:", DriverById);
 
@@ -44,7 +44,7 @@ const getDriverByIdController = async (req, res) => {
 const updateDriverByIdController = async (req,res) => {
   try {
     const id = req.params.id;
-    const updatedDriver = await updateDriverById(id, req.body);
+    const updatedDriver = await driverService.updateDriverById(id, req.body);
 
     console.log("The updated driver with id:", id, "is: ", updatedDriver);
 
@@ -62,7 +62,7 @@ const updateDriverByIdController = async (req,res) => {
 const deleteDriverByIdController = async (req, res) => {
   try {
     const id = req.params.id;
-    const delDriverById = await deleteDriverById(id);
+    const delDriverById = await driverService.deleteDriverById(id);
 
     console.log("Deleting the Driver:", delDriverById);
 

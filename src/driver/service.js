@@ -1,6 +1,6 @@
 // milame me basi edw
 import { Types } from 'mongoose';
-import Driver from './model';
+import Driver from './model.js';
 
 const getAllUsers = async () => {
     const drivers = await Driver.find();

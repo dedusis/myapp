@@ -1,5 +1,5 @@
 import express from 'express';
-import driverConroller from './controller';
+import driverConroller from './controller.js';
 
 
 const router = express.Router();
@@ -19,4 +19,4 @@ router.put('/:id', driverConroller.updateDriverByIdController);
 //delete driver by id
 router.delete('/:id', driverConroller.deleteDriverByIdController);
 
-module.exports = router; 
+export default router; 
