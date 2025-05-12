@@ -3,17 +3,15 @@ import bcrypt from 'bcrypt';         // optional
 import Driver from '../driver/model.js';
 
 export const loginService = async (username, password) => {
-  const driver = await Driver.findOne({ username, password });
+  const driver = await Driver.findOne({ username });
   if (!driver) {
     throw new Error('Invalid credentials');
-  }
+  };
 
-// For the future, check encrypted password, if matches.
-
-//   const passwordMatches = await bcrypt.compare(password, driver.password);
-//   if (!passwordMatches) {
-//     throw new Error('Invalid credentials');
-//   }
+  const passwordMatches = await bcrypt.compare(password, driver.password);
+  if (!passwordMatches) {
+    throw new Error('Invalid credentials');
+  } 
 
   const payload = {
     id: driver._id,
