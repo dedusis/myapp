@@ -19,6 +19,11 @@ const createDriverController = async (req, res) => {
     res.status(201).json({ Message: 'Driver created successfully', driver: newDriver });
   } catch (err) {
     console.error('Error creating driver:', err);
+
+    if (err.message.includes('admin')) {
+      return res.status(400).json({ error: err.message  });
+    }
+
     res.status(500).json({ error: 'Server error while creating driber' });
   }
 };

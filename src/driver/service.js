@@ -8,6 +8,13 @@ const getAllUsers = async () => {
 };
 
 const createDriver = async (driverData) => {
+    if (driverData.role === 'admin') {
+        const existingAdmin = await Driver.findOne({ role: 'admin' });
+        if (existingAdmin) {
+            throw new Error('You cant create another admin');
+        }
+    }
+
     const newDriver = new Driver(driverData);
     await newDriver.save();
     return newDriver;

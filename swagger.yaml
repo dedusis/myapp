@@ -74,6 +74,19 @@ paths:
                     type: string
                   driver:
                     $ref: '#/components/schemas/Driver'
+        '400':
+          description: Cannot create another admin. Only one admin is allowed.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string 
+                  properties:
+                    error:
+                      type: string
+                      example: There is one admin. Can not create anotherone.
         '500':
           description: Server error
           content:
@@ -231,3 +244,4 @@ components:
           type: string
           enum: [admin, driver]
           default: driver
+          description: You can not create another admin.
