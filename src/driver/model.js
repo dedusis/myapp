@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const driverSchema = new Schema({
+const userSchema = new Schema({
     name: String,
     lastname: String,
     licenseNumber: String,
@@ -13,11 +13,16 @@ const driverSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    role: {
+        type: String,
+        enum: ['driver', 'admin'],
+        default: 'driver'
     }
 });
 
 //hash password before saving
-driverSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     try {
         const salt = await bcrypt.genSalt(10)
@@ -30,4 +35,4 @@ driverSchema.pre('save', async function (next) {
 });
 
 
-export default model('Driver', driverSchema);
+export default model('Driver', userSchema);

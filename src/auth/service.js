@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';         // optional
+import bcrypt from 'bcrypt';         
 import Driver from '../driver/model.js';
 
 export const loginService = async (username, password) => {
@@ -16,7 +16,7 @@ export const loginService = async (username, password) => {
   const payload = {
     id: driver._id,
     username: driver.username,
-    role: 'driver'
+    role: driver.role
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, {

@@ -1,8 +1,13 @@
 import express from 'express';
 import driverConroller from './controller.js';
+import { isAdmin, verifyToken } from '../middleware/auth.js';
 
 
 const router = express.Router();
+
+//protected routes
+router.use(verifyToken, isAdmin);
+
 
 //get all drivers
 router.get('/all', driverConroller.getAllUsersController);
