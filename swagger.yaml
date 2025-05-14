@@ -199,6 +199,111 @@ paths:
                   error:
                     type: string
 
+  /truck/:
+    post:
+      summary: Create a new truck
+      tags:
+        - Trucks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTruck'
+      responses:
+        '201':
+          description: Truck created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /truck/{id}:
+    get:
+      summary: Get a truck by ID
+      tags:
+        - Trucks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Truck found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+        '404':
+          description: Truck not found
+        '500':
+          description: Server error
+
+    put:
+      summary: Update a truck by ID
+      tags:
+        - Trucks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTruck'
+      responses:
+        '200':
+          description: Truck updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+        '404':
+          description: Truck not found
+        '500':
+          description: Server error
+
+    delete:
+      summary: Delete a truck by ID
+      tags:
+        - Trucks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Truck deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Truck not found
+        '500':
+          description: Server error
+
+
 
 components:
   securitySchemes:
@@ -307,3 +412,34 @@ components:
           format: date-time
           example: 2025-05-13T12:00:00.000Z
 
+    NewTruck:
+      type: object
+      required:
+        - plateNumber
+        - brand
+        - model
+        - year
+        - isAvailable
+      properties:
+        plateNumber:
+          type: string
+          example: YYY1234
+        brand:
+          type: string
+          example: Volvo
+        model:
+          type: string
+          example: FH16
+        year:
+          type: integer
+          example: 2020
+        isAvailable:
+          type: boolean
+          example: true
+        lastMaintenance:
+          type: string
+          format: date
+          example: 2024-05-01
+        assignedDriver:
+          type: string
+          example: 665a282c1cd34ddf8d984b6c
