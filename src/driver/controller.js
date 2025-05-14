@@ -4,7 +4,7 @@ import driverService from './service.js';
 const getAllUsersController = async (req, res) => {
   try {
     const drivers = await driverService.getAllUsers();
-    console.log("Drivers list:", drivers);
+    console.log("Driver list:", drivers);
     res.status(200).json(drivers);
   } catch (err) {
     console.error('Error fetching drivers:', err);
