@@ -6,7 +6,7 @@ import { isAdmin, verifyToken } from '../middleware/auth.js';
 const router = express.Router();
 
 //protected routes
-router.use(verifyToken, isAdmin);
+router.use(verifyToken, isAdmin); 
 
 
 //get all drivers

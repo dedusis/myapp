@@ -12,8 +12,7 @@ paths:
   /auth/login:
     post:
       summary: User login
-      tags:
-        - Authentication
+      tags: [Authentication]
       requestBody:
         required: true
         content:
@@ -35,8 +34,7 @@ paths:
   /driver/all:
     get:
       summary: Get all drivers
-      tags:
-        - Drivers
+      tags: [Drivers]
       security:
         - bearerAuth: []
       responses:
@@ -52,8 +50,7 @@ paths:
   /driver/:
     post:
       summary: Create a new driver
-      tags:
-        - Drivers
+      tags: [Drivers]
       security:
         - bearerAuth: []
       requestBody:
@@ -76,17 +73,14 @@ paths:
                     $ref: '#/components/schemas/Driver'
         '400':
           description: Cannot create another admin. Only one admin is allowed.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                error:
-                  type: string 
-                  properties:
-                    error:
-                      type: string
-                      example: There is one admin. Can not create anotherone.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: There is one admin. Can not create another one.
         '500':
           description: Server error
           content:
@@ -100,8 +94,7 @@ paths:
   /driver/{id}:
     get:
       summary: Get a driver by ID
-      tags:
-        - Drivers
+      tags: [Drivers]
       security:
         - bearerAuth: []
       parameters:
@@ -110,7 +103,6 @@ paths:
           required: true
           schema:
             type: string
-          description: The ID of the driver
       responses:
         '200':
           description: Driver found
@@ -125,8 +117,7 @@ paths:
 
     put:
       summary: Update a driver by ID
-      tags:
-        - Drivers
+      tags: [Drivers]
       security:
         - bearerAuth: []
       parameters:
@@ -155,8 +146,7 @@ paths:
 
     delete:
       summary: Delete a driver by ID
-      tags:
-        - Drivers
+      tags: [Drivers]
       security:
         - bearerAuth: []
       parameters:
@@ -176,8 +166,7 @@ paths:
   /truck/all:
     get:
       summary: Get all trucks
-      tags:
-        - Trucks
+      tags: [Trucks]
       security:
         - bearerAuth: []
       responses:
@@ -202,8 +191,7 @@ paths:
   /truck/:
     post:
       summary: Create a new truck
-      tags:
-        - Trucks
+      tags: [Trucks]
       requestBody:
         required: true
         content:
@@ -227,14 +215,61 @@ paths:
                   error:
                     type: string
 
-  /truck/{id}:
+  /truck/assign:
+    patch:
+      summary: Assign a truck to a driver
+      tags: [Trucks]
+      description: Assigns a specific truck to a specific driver, only if both are available.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [truckId, driverId]
+              properties:
+                truckId:
+                  type: string
+                driverId:
+                  type: string
+      responses:
+        '200':
+          description: Truck successfully assigned to driver
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+        '400':
+          description: Invalid data or assignment conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Driver is already assigned to another truck
+        '404':
+          description: Truck or driver not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Server error
+
+  /truck/{plate}:
     get:
-      summary: Get a truck by ID
-      tags:
-        - Trucks
+      summary: Get a truck by plate number
+      tags: [Trucks]
+      security:
+        - bearerAuth: []
       parameters:
-        - name: id
-          in: path
+        - in: path
+          name: plate
           required: true
           schema:
             type: string
@@ -250,13 +285,13 @@ paths:
         '500':
           description: Server error
 
+  /truck/{id}:
     put:
       summary: Update a truck by ID
-      tags:
-        - Trucks
+      tags: [Trucks]
       parameters:
-        - name: id
-          in: path
+        - in: path
+          name: id
           required: true
           schema:
             type: string
@@ -280,11 +315,10 @@ paths:
 
     delete:
       summary: Delete a truck by ID
-      tags:
-        - Trucks
+      tags: [Trucks]
       parameters:
-        - name: id
-          in: path
+        - in: path
+          name: id
           required: true
           schema:
             type: string
@@ -303,8 +337,6 @@ paths:
         '500':
           description: Server error
 
-
-
 components:
   securitySchemes:
     bearerAuth:
@@ -315,30 +347,42 @@ components:
   schemas:
     Credentials:
       type: object
-      required:
-        - username
-        - password
+      required: [username, password]
       properties:
         username:
           type: string
-          example: user@example.com
+          example: admin
         password:
           type: string
-          example: hunter2
+          example: admin
 
     AuthResponse:
       type: object
       properties:
         token:
           type: string
-          description: JWT access token
           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
         expiresIn:
           type: integer
-          description: Expiration time in seconds
           example: 3600
 
-    Driver:
+    AssignedTruckDetails:
+      type: object
+      properties:
+        plateNumber:
+          type: string
+          example: KZA1234
+        brand:
+          type: string
+          example: Mercedes
+        model:
+          type: string
+          example: Actros
+        year:
+          type: integer
+          example: 2020
+
+    AssignedDriverDetails:
       type: object
       properties:
         _id:
@@ -353,6 +397,26 @@ components:
         licenseNumber:
           type: string
           example: 1347h743h71hf44j9f818fj3
+
+    Driver:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        lastname:
+          type: string
+        licenseNumber:
+          type: string
+        username:
+          type: string
+        role:
+          type: string
+        assignedTruck:
+          oneOf:
+            - $ref: '#/components/schemas/AssignedTruckDetails'
+            - type: 'null'
 
     NewDriver:
       type: object
@@ -376,70 +440,51 @@ components:
           type: string
           enum: [admin, driver]
           default: driver
-          description: You can not create another admin.
 
     Truck:
       type: object
       properties:
         _id:
           type: string
-          example: 665a282c1cd34ddf8d984b6c
         plateNumber:
           type: string
-          example: YZH1234
         brand:
           type: string
-          example: Volvo
         model:
           type: string
-          example: FH16
         year:
           type: integer
-          example: 2020
         isAvailable:
           type: boolean
-          example: true
         lastMaintenance:
           type: string
           format: date
-          example: 2024-12-01
         assignedDriver:
-          type: string
-          nullable: true
-          example: 665a282c1cd34ddf8d984b6c
+          oneOf:
+            - $ref: '#/components/schemas/AssignedDriverDetails'
+            - type: 'null'
         createdAt:
           type: string
           format: date-time
-          example: 2025-05-13T12:00:00.000Z
 
     NewTruck:
       type: object
-      required:
-        - plateNumber
-        - brand
-        - model
-        - year
-        - isAvailable
+      required: [plateNumber, brand, model, year]
       properties:
         plateNumber:
           type: string
-          example: YYY1234
         brand:
           type: string
-          example: Volvo
         model:
           type: string
-          example: FH16
         year:
           type: integer
-          example: 2020
         isAvailable:
           type: boolean
           example: true
         lastMaintenance:
           type: string
           format: date
-          example: 2024-05-01
         assignedDriver:
           type: string
-          example: 665a282c1cd34ddf8d984b6c
+          example: null

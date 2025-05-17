@@ -1,9 +1,14 @@
 // milame me basi edw
 import { Types } from 'mongoose';
 import Driver from './model.js';
+import Truck from '../truck/model.js';
 
 const getAllUsers = async () => {
-    const drivers = await Driver.find();
+    const drivers = await Driver.find().populate({
+        path: 'assignedTruck',
+        model: Truck,
+        select: 'plateNumber brand model year'
+    });
     return drivers;
 };
 
@@ -21,7 +26,11 @@ const createDriver = async (driverData) => {
 };
 
 const getDriverById = async (id) => {
-    const driver = await Driver.findById(id);
+    const driver = await Driver.findById(id).populate({
+        path: 'assignedTruck',
+        model: Truck,
+        select: 'plateNumber brand model year'
+    });
     if (!Types.ObjectId.isValid(id)) {
         throw new Error("Invalid ID")
     }

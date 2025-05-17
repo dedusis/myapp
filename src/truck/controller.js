@@ -23,10 +23,10 @@ const createTruckController = async (req, res) => {
     }
 };
 
-const getTruckByIdController = async (req, res) => {
-    const id = req.params.id;
+const getTruckByPlateNumberController = async (req, res) => {
+    const plate = req.params.plate;
     try {
-        const truck = await truckService.getTruckById(id);
+        const truck = await truckService.getTruckByPlateNumber(plate);
         if (!truck) {
             return res.status(404).json({ error: 'Truck not found' });
         }
@@ -66,10 +66,23 @@ const deleteTruckController = async (req, res) => {
     }
 };
 
+//assign truck to driver
+const assignTruckToDriverController = async (req, res) => {
+    const { truckId, driverId } = req.body;
+    try {
+        const updateTruck = await truckService.assignTruckToDriver(truckId, driverId);
+        res.status(200).json(updateTruck);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+};
+
+
 export default {
     getAllTrucksController,
     createTruckController,
-    getTruckByIdController,
+    getTruckByPlateNumberController,
     updateTruckController,
-    deleteTruckController
+    deleteTruckController,
+    assignTruckToDriverController
 };
