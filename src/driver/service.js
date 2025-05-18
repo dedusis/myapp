@@ -50,6 +50,19 @@ const deleteDriverById = async (id) => {
     if (!Types.ObjectId.isValid(id)) {
         throw new Error("Invalid ID")
     }
+
+    if (!delDriverById) {
+        return null;
+    }
+
+    if (delDriverById.assignedTruck) {
+        const truck = await Truck.findById(delDriverById.assignedTruck);
+        if (truck) {
+            truck.assignedDriver = null;
+            await truck.save();
+        }
+    }
+
     return delDriverById;
 };
 

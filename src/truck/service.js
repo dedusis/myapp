@@ -44,6 +44,20 @@ const deleteTruck = async (id) => {
     if (!Types.ObjectId.isValid(id)) {
         throw new Error('Invalid truck ID');
     }
+
+    const truck = await Truck.findById(id);
+    if (!truck) {
+        return null;
+    }
+
+    if (truck.assignedDriver) {
+        const driver = await Driver.findById(truck.assignedDriver);
+        if (driver) {
+            driver.assignedTruck = null;
+            await driver.save();
+        }
+    }
+
     const deletedTruck = await Truck.findByIdAndDelete(id);
     return deletedTruck;
 }
