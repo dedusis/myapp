@@ -24,6 +24,11 @@ const truckSchema = new Schema({
         type: Boolean,
         required: true
     },
+    mileage: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
     lastMaintenance: {
         type: Date
     },

@@ -192,6 +192,8 @@ paths:
     post:
       summary: Create a new truck
       tags: [Trucks]
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -219,6 +221,8 @@ paths:
     patch:
       summary: Assign a truck to a driver
       tags: [Trucks]
+      security:
+        - bearerAuth: []
       description: Assigns a specific truck to a specific driver, only if both are available.
       requestBody:
         required: true
@@ -289,6 +293,8 @@ paths:
     put:
       summary: Update a truck by ID
       tags: [Trucks]
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -316,6 +322,8 @@ paths:
     delete:
       summary: Delete a truck by ID
       tags: [Trucks]
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -334,6 +342,79 @@ paths:
                     type: string
         '404':
           description: Truck not found
+        '500':
+          description: Server error
+
+  /truck/my-truck:
+    get:
+      tags:
+        - My Truck
+      summary: Get the truck assigned to the logged-in driver
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully retrieved assigned truck
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+        '404':
+          description: No truck assigned to this driver
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: No truck assigned to this driver
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Server error
+                    
+    patch:
+      summary: Update mileage and last maintenance of the truck assigned to the authenticated driver
+      tags:
+        - My Truck
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mileage:
+                  type: number
+                  example: 150000
+                lastMaintenance:
+                  type: string
+                  format: date
+                  example: "2025-05-17"
+              required:
+                - mileage
+      responses:
+        '200':
+          description: Truck updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized - Driver not authenticated
+        '404':
+          description: Assigned truck not found
         '500':
           description: Server error
 
@@ -459,6 +540,9 @@ components:
         lastMaintenance:
           type: string
           format: date
+        mileage:
+          type: number
+          description: Current mileage of the truck
         assignedDriver:
           oneOf:
             - $ref: '#/components/schemas/AssignedDriverDetails'

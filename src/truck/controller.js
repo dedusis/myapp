@@ -1,4 +1,6 @@
 import truckService from './service.js';
+import mongoose from 'mongoose';
+import Truck from './model.js';
 
 const getAllTrucksController = async (req, res) => {
     try {
@@ -77,6 +79,45 @@ const assignTruckToDriverController = async (req, res) => {
     }
 };
 
+//get my truck
+const getMyTruckController = async (req, res) => {
+    const driverId = req.user.id;
+
+    try {
+        const truck = await Truck.findOne({ assignedDriver: driverId });
+        if(!truck) {
+            return res.status(404).json({ message: 'No truck assigned to this driver' });
+        }
+        res.json(truck);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+//update my truck
+const updateMyTruckController = async (req, res) => {
+    const driverId = req.user.id
+
+    try {
+        const truck = await Truck.findOne({ assignedDriver: driverId });
+
+        if (!truck) {
+            return res.status(404).json({ error: 'Truck not assigned to this driver' });
+        }
+
+        const { mileage, lastMaintenanance } = req.body;
+
+        if (mileage !== undefined) truck.mileage = mileage;
+        if (lastMaintenanance !== undefined) truck.lastMaintenanance = lastMaintenanance;
+
+        await truck.save();
+
+        res.status(200).json({ message: 'Truck updated successfully', truck });
+    } catch (err) {
+        console.error('Error updating truck by driver:', err);
+        res.status(500).json({ error: 'Server error while updating truck' });
+    }
+};
 
 export default {
     getAllTrucksController,
@@ -84,5 +125,7 @@ export default {
     getTruckByPlateNumberController,
     updateTruckController,
     deleteTruckController,
-    assignTruckToDriverController
+    assignTruckToDriverController,
+    getMyTruckController,
+    updateMyTruckController
 };
