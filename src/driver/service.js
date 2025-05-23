@@ -2,6 +2,7 @@
 import { Types } from 'mongoose';
 import Driver from './model.js';
 import Truck from '../truck/model.js';
+import brcypt from 'bcrypt';
 
 const getAllUsers = async () => {
     const drivers = await Driver.find().populate({
@@ -37,11 +38,19 @@ const getDriverById = async (id) => {
     return driver;
 }
 
+import bcrypt from 'bcrypt';
+
 const updateDriverById = async (id, data) => {
-    const updateDriver = await Driver.findByIdAndUpdate(id, data, { new: true });
     if (!Types.ObjectId.isValid(id)) {
-        throw new Error("Invalid ID")
+        throw new Error("Invalid ID");
     }
+
+    if (data.password) {
+        const salt = await bcrypt.genSalt(10);
+        data.password = await bcrypt.hash(data.password, salt);
+    }
+
+    const updateDriver = await Driver.findByIdAndUpdate(id, data, { new: true });
     return updateDriver;
 };
 
