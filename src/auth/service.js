@@ -34,3 +34,7 @@ export const loginService = async (username, password) => {
     }
   };
 };
+
+export const getUserProfile = async (userId) => {
+  return await Driver.findById(userId).select('-password');
+};
