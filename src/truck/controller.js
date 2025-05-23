@@ -105,10 +105,10 @@ const updateMyTruckController = async (req, res) => {
             return res.status(404).json({ error: 'Truck not assigned to this driver' });
         }
 
-        const { mileage, lastMaintenanance } = req.body;
+        const { mileage, lastMaintenance } = req.body;
 
         if (mileage !== undefined) truck.mileage = mileage;
-        if (lastMaintenanance !== undefined) truck.lastMaintenanance = lastMaintenanance;
+        if (lastMaintenance !== undefined) truck.lastMaintenance = lastMaintenance;
 
         await truck.save();
 
