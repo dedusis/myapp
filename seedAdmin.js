@@ -32,13 +32,12 @@ const seedAdmin = async () => {
         const password = await askPassword('Enter admin password: ');
         rl.close();
 
-        const hashedPassword = await bcrypt.hash(password, 10)
 
         const adminUser = new Driver({
-            name: 'Admin',
+            name: 'admin',
             lastname:'admin',
             username:'admin',
-            password: hashedPassword,
+            password: password,
             role:'admin'
         });
 
