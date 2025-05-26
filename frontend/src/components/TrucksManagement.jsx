@@ -77,12 +77,14 @@ const TrucksManagement = () => {
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Manage Trucks</h2>
+        <h2>
         <button
           onClick={() => navigate('/admin/create-truck')}
           className="bg-green-600 text-white px-4 py-2 rounded-full text-xl"
         >
           ➕
         </button>
+        </h2>
       </div>
 
       {loading ? <p>Loading trucks...</p> : (

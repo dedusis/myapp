@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(rgba(24, 23, 23, 0.5), rgba(255,255,255,0.5)),
+              url('../images/truck.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+
+.p-4 {
+  background-color: rgba(31, 30, 30, 0.26);
+  max-width: 600px;
+  margin: 5rem auto;
+  padding: 2rem !important;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.text-2xl {
+  color: #dbd3d3;
+  text-align: center;
+  font-size: 1.75rem !important;
+  margin-bottom: 2rem !important;
+}
+
+button {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+   cursor: pointer;
+}
+
+.bg-green-500 {
+  background-color: #4caf50 !important;
+}
+
+.bg-green-500:hover {
+  background-color: #3e8e41 !important;
+}
+
+.bg-blue-500 {
+  background-color: #2196f3 !important;
+}
+
+.bg-blue-500:hover {
+  background-color: #1976d2 !important;
+}
+
+.bg-red-600 {
+  background-color: #f44336 !important;
+}
+
+.bg-red-600:hover {
+  background-color: #d32f2f !important;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mt-8 > button:last-child {
+  margin-bottom: 0;
+}
+
+
+
