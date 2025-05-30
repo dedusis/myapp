@@ -34,20 +34,20 @@ const UpdateTruckPage = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Update My Truck</h2>
+      <h2 className="text-2xl font-bold mb-4">Update My Truck</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label>Mileage:</label>
+          <label className='text-lg font-semibold'>Mileage:</label>
           <input
             type="number"
             name="mileage"
             value={formData.mileage}
             onChange={handleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 rounded w-full mb-4"
           />
         </div>
         <div>
-          <label>Last Maintenance Date:</label>
+          <label className='text-lg font-semibold mb-4'>Last Maintenance Date:</label>
           <input
             type="date"
             name="lastMaintenance"
@@ -56,14 +56,15 @@ const UpdateTruckPage = () => {
             className="border p-2 rounded w-full"
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        
+        <button type="submit" className="bg-blue-500 text-white text-xl font-bold px-4 py-2 rounded">
           Update
         </button>
       </form>
       {message && <p className="mt-4 text-green-600">{message}</p>}
       <button
         onClick={() => navigate('/driver')}
-        className="text-blue-600 hover:underline mb-4"
+        className="text-blue-600 text-lg font-bold hover:underline mb-2"
       >
         ← Back
       </button>

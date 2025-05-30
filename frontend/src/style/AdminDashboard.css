@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(rgba(24, 23, 23, 0.5), rgba(255,255,255,0.5)),
-              url('../images/truck.jpg');
+  background-image: linear-gradient(rgba(20, 19, 19, 0.5), rgba(124, 60, 7, 0.5)),
+              url('../images/truck4.jpg') !important;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -11,25 +11,35 @@ body {
 
 
 .p-4 {
-  background-color: rgba(31, 30, 30, 0.26);
-  max-width: 600px;
+  background-color: #0000008e !important;
+  max-width: 800px !important;
   margin: 5rem auto;
-  padding: 2rem !important;
+  padding: 3rem !important;
   border-radius: 1rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.site-title {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 2.5em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .text-2xl {
   color: #dbd3d3;
   text-align: center;
-  font-size: 1.75rem !important;
-  margin-bottom: 2rem !important;
+  font-size: 4rem !important;
+  margin-bottom: 4rem !important;
 }
 
 button {
   display: block;
+  min-width: 100;
   width: 100%;
-  margin-bottom: 1rem;
+  min-height: 60;
+  margin-bottom: 2rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
   font-weight: 500;
    cursor: pointer;
@@ -68,5 +78,7 @@ button:hover {
   margin-bottom: 0;
 }
 
-
-
+.mt-8 img{ 
+  width:35px;
+  height:35px;
+}

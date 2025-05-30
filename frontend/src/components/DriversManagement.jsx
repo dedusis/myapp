@@ -39,7 +39,10 @@ const DriversManagement = () => {
   }, []);
 
   const handleDelete = async (id) => {
+    const confirmed = window.confirm('Are you sure you want to delete this driver?');
+    if (!confirmed) return;
     await apiRequest(`/driver/${id}`, 'DELETE', token);
+    alert('Driver deleted successfully!');
     fetchDrivers();
   };
 
@@ -62,6 +65,7 @@ const DriversManagement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (editingId) {
+      alert('Driver updated successfully!');
       await apiRequest(`/driver/${editingId}`, 'PUT', token, formData);
     }
     setEditingId(null);
@@ -100,13 +104,15 @@ const DriversManagement = () => {
       {/* Header with create button */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Manage Drivers</h2>
+        <h2>
         <button
           onClick={() => navigate('/admin/create-driver')}
           className="bg-green-600 text-white px-4 py-2 rounded-full text-xl"
         >
           ➕
         </button>
-      </div>
+        </h2>
+     </div>
 
       {/* Search by ID */}
       <div className="mb-6">
@@ -229,7 +235,7 @@ const DriversManagement = () => {
 
       <button
         onClick={() => navigate('/admin')}
-        className="mt-6 text-blue-500 hover:underline"
+        className="mt-6 text-blue-600 text-lg font-bold hover:underline"
       >
         ← Back
       </button>

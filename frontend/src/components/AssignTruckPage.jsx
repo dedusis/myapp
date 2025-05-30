@@ -60,18 +60,18 @@ const AssignTruckPage = () => {
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto">
+    <div className="p-4 max-w-xl mx-auto">
       <h2 className="text-2xl font-semibold mb-4">Assign Truck to Driver</h2>
 
       <form onSubmit={handleAssign} className="space-y-4">
         <div>
-          <label className="block font-medium mb-1">Select Driver:</label>
+          <label className="block text-xl font-bold font-medium mb-1">Select Driver:</label>
           <select
             value={selectedDriverId}
             onChange={(e) => setSelectedDriverId(e.target.value)}
-            className="w-full border rounded p-2"
+            className="w-full text-lg border rounded p-2"
           >
-            <option value="">-- Choose a driver --</option>
+            <option value=""> Choose a driver </option>
             {drivers.map(driver => (
               <option key={driver._id} value={driver._id}>
                 {driver.name} {driver.lastname} ({driver.licenseNumber})
@@ -81,13 +81,13 @@ const AssignTruckPage = () => {
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Select Truck:</label>
+          <label className="block font-medium font-bold text-xl mb-1">Select Truck:</label>
           <select
             value={selectedTruckId}
             onChange={(e) => setSelectedTruckId(e.target.value)}
-            className="w-full border rounded p-2"
+            className="w-full text-lg border rounded p-2"
           >
-            <option value="">-- Choose a truck --</option>
+            <option value=""> Choose a truck </option>
             {trucks.map(truck => (
               <option key={truck._id} value={truck._id}>
                 {truck.plateNumber} - {truck.brand} {truck.model}
@@ -112,7 +112,7 @@ const AssignTruckPage = () => {
 
       <button
         onClick={() => navigate('/admin')}
-        className="mt-6 text-blue-500 hover:underline"
+        className="mt-6 text-blue-600 text-lg font-bold  hover:underline"
       >
         ← Back
       </button>

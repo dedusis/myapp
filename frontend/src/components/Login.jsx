@@ -28,14 +28,14 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-sm mx-auto mt-10 p-4 border rounded">
-      <h2 className="text-xl mb-4">Login</h2>
+      <h2 className="text-2xl font-bold text-center mt-8 mb-6">TransitPro</h2>
       <input
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required
-        className="w-full p-2 mb-3 border rounded"
+        className="w-full  text-xl p-2 mb-3 border rounded"
       />
       <input
         type="password"
@@ -43,9 +43,9 @@ const Login = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
-        className="w-full p-2 mb-3 border rounded"
+        className="w-full text-xl p-2 mb-4 border rounded"
       />
-      <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">Login</button>
+      <button type="submit" className="w-full bg-blue-600 text-xl font-bold text-white mt-4 p-2 rounded">Login</button>
     </form>
   );
 };

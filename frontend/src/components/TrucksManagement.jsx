@@ -32,7 +32,10 @@ const TrucksManagement = () => {
   }, []);
 
   const handleDelete = async (id) => {
+    const confirmed = window.confirm('Are you sure you want to delete this truck?');
+    if (!confirmed) return;
     await apiRequest(`/truck/${id}`, 'DELETE', token);
+    alert('Truck deleted successfully!');
     fetchTrucks();
   };
 
@@ -49,6 +52,7 @@ const TrucksManagement = () => {
         ? new Date(truck.lastMaintenance).toISOString().split('T')[0]
         : '',
     });
+    
   };
 
   const handleInfo = (truck) => {
@@ -60,6 +64,7 @@ const TrucksManagement = () => {
     if (editingId) {
       await apiRequest(`/truck/${editingId}`, 'PUT', token, formData);
     }
+    alert('Truck updated successfully!');
     setEditingId(null);
     setFormData({
       plateNumber: '',
@@ -166,7 +171,7 @@ const TrucksManagement = () => {
 
     <button
         onClick={() => navigate('/admin')}
-        className="mt-6 text-blue-500 hover:underline"
+        className="mt-6 text-blue-600 text-lg font-bold hover:underline"
       >
         ← Back
       </button>

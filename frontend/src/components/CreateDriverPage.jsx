@@ -21,10 +21,12 @@ const CreateDriverPage = () => {
     e.preventDefault();
     try {
       await apiRequest('/driver', 'POST', token, formData);
+      alert('Driver created successfully!');
       navigate('/admin/drivers'); 
     } catch (err) {
       console.error('Error creating driver:', err);
     }
+    
   };
 
   return (
@@ -80,7 +82,7 @@ const CreateDriverPage = () => {
       </form>
       <button
         onClick={() => navigate('/admin/Drivers')}
-        className="mt-6 text-blue-500 hover:underline"
+        className="mt-6 text-blue-600 text-lg font-bold hover:underline"
       >
         ← Back
       </button>

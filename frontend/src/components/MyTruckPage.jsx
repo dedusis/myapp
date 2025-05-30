@@ -27,20 +27,20 @@ const MyTruckPage = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">My Truck</h2>
-      <p><strong>ID:</strong> {truck._id}</p>
-      <p><strong>Plate Number:</strong> {truck.plateNumber}</p>
-      <p><strong>Brand:</strong> {truck.brand}</p>
-      <p><strong>Model:</strong> {truck.model}</p>
-      <p><strong>Year:</strong> {truck.year}</p>
-      <p><strong>Mileage:</strong> {truck.mileage}</p>
-      <p><strong>Last Maintenance:</strong> {truck.lastMaintenance
+      <h2 className="text-2xl font-bold mb-4">My Truck</h2>
+      <p className='text-lg font-bold'><strong>ID:</strong> {truck._id}</p>
+      <p className='text-lg font-bold'><strong>Plate Number:</strong> {truck.plateNumber}</p>
+      <p className='text-lg font-bold'><strong>Brand:</strong> {truck.brand}</p>
+      <p className='text-lg font-bold'><strong>Model:</strong> {truck.model}</p>
+      <p className='text-lg font-bold'><strong>Year:</strong> {truck.year}</p>
+      <p className='text-lg font-bold'><strong>Mileage:</strong> {truck.mileage}</p>
+      <p className='text-lg font-bold'><strong>Last Maintenance:</strong> {truck.lastMaintenance
         ? new Date(truck.lastMaintenance).toLocaleDateString('el-GR')
         : 'Not set'}
       </p>
       <button
         onClick={() => navigate('/driver')}
-        className="text-blue-600 hover:underline mb-4"
+        className="text-blue-600 text-lg font-bold hover:underline mb-4"
       >
         ← Back
       </button>

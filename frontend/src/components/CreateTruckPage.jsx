@@ -12,6 +12,7 @@ const CreateTruckPage = () => {
     isAvailable: true,
   });
   const [error, setError] = useState('');
+  
   const navigate = useNavigate();
   const { token, user } = useAuth();
 
@@ -31,12 +32,14 @@ const CreateTruckPage = () => {
     e.preventDefault();
     setError('');
 
+
     try {
       const response = await apiRequest('/truck', 'POST', token, formData);
 
       if (response.error) {
         setError(response.error);
       } else {
+        alert('Truck created successfully!');
         navigate('/admin/trucks');
       }
     } catch (err) {
@@ -46,7 +49,7 @@ const CreateTruckPage = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
+    <div className="max-w-xl mx-auto mt-8 p-4 border rounded shadow">
       <h2 className="text-2xl font-bold mb-4 text-center">Create New Truck</h2>
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -114,7 +117,7 @@ const CreateTruckPage = () => {
       </form>
       <button
         onClick={() => navigate('/admin/trucks')}
-        className="mt-6 text-blue-500 hover:underline"
+        className="mt-6 text-blue-600 text-lg font-bold hover:underline"
       >
         ← Back
       </button>
